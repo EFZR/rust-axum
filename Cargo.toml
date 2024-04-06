@@ -1,0 +1,48 @@
+[package]
+name = "rust-axum"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+tokio = { version = "1", features = ["full"] }
+# -- Serde / JSON
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+serde_with = "3.6.1"
+# -- Axum
+axum = "0.7.4"
+tower-http = { version = "0.5.1", features = ["fs"] }
+tower-cookies = "0.10.0"
+# -- Data
+sqlx = { version = "0.7.4", features = [
+  "runtime-tokio-rustls",
+  "postgres",
+  "uuid",
+  "time",
+] }
+sea-query = "0.30"
+sea-query-binder = { version = "0.5", features = [
+  "sqlx-postgres",
+  "with-uuid",
+] }
+modql = { version = "0.3", features = ["with-sea-query"] }
+# -- Tracing
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+# -- Crypt & Encoding
+rand = "0.8"
+hmac = "0.12"
+sha2 = "0.10"
+base64-url = "2.0"
+# -- Others
+lazy-regex = "3.1.0"
+async-trait = "0.1"
+strum_macros = "0.26.1"
+uuid = { version = "1", features = ["v4", "fast-rng"] }
+time = "0.3"
+derive_more ={ version = "0.99", features = ["from"] }
+
+[dev-dependencies]
+anyhow = "1"
+httpc-test = "0.1.1"
+serial_test = "3"
