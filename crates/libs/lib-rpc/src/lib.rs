@@ -19,7 +19,7 @@ use task_rpc::{create_task, delete_task, list_tasks, update_task};
 /// The raw JSON-RPC request object, serving as the foundation for RPC routing.
 #[derive(Deserialize)]
 pub struct RpcRequest {
-    pub id: i64,
+    pub id: Option<Value>,
     pub method: String,
     pub params: Option<Value>,
 }

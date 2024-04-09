@@ -19,7 +19,7 @@ pub type Result<T> = std::result::Result<T, Error>;
 pub enum Error {
     // -- Login
     LoginFailUsernameNotFound,
-    LoginFailUserHashNoPwd {
+    LoginFailUserHasNoPwd {
         user_id: i64,
     },
     LoginFailPwdNotMatching {
@@ -85,7 +85,7 @@ impl Error {
             // -- Login
             Self::LoginFailUsernameNotFound
             | Self::LoginFailPwdNotMatching { .. }
-            | Self::LoginFailUserHashNoPwd { .. } => {
+            | Self::LoginFailUserHasNoPwd { .. } => {
                 (StatusCode::FORBIDDEN, ClientError::LOGIN_FAIL)
             }
 

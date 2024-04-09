@@ -25,3 +25,10 @@ impl Ctx {
         }
     }
 }
+
+// Property Accesors
+impl Ctx {
+    pub fn user_id(&self) -> i64 {
+        self.user_id
+    }
+}
