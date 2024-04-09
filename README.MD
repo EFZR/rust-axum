@@ -53,6 +53,13 @@ In this episode, we accomplished the following task:
 - *Database Query Improvement*: We transitioned from using `sqlx`/`sqlb` to `sea-query`/`modql`. This change was made to enhance our capabilities in building, manipulating, and filtering database queries.
 - *Modql & filters*: Using the `modql` crate, we were able to make a filter using certain `modql` operators in the JSON client request. This allows us to filter the results by using the `ListOptions` and `FilterGroups` types of `modql`.
 
+## Completed Episode 03
+
+In this episode, we accomplished the following tasks:
+
+- *Destruct the project to make multi service arch*: We've restructured the project to adopt a multi-service architecture. This approach enables us to host multiple services within the same project while leveraging shared libraries across the workspace.
+- *Utilizing Wrapper Pattern in `CtxW`*: We've employed a wrapper pattern within the `CtxW` struct to manage the user context in `Ctx`. This strategy facilitates the extraction of context from the request, allowing its utilization within the server.
+
 ## Deployment
 
 This section provides instructions on how to deploy and test the server.
@@ -62,7 +69,7 @@ This section provides instructions on how to deploy and test the server.
 To start the main server, use the following command:
 
 ```shell
-cargo watch -q -c -w src/ -w .cargo/ -x run
+cargo watch -c -q -w .\crates\services\web-server\src\ -w .\crates\libs\ -w .\.cargo\ -x "run -p web-server"
 ```
 
 This command will start the server and watch the `src/` and `.cargo/` directories for changes. The server will automatically restart when changes are detected.
@@ -72,7 +79,7 @@ This command will start the server and watch the `src/` and `.cargo/` directorie
 To send some requests to the server for testing purposes, use the following command:
 
 ```shell
-cargo watch -q -c -w examples/ -x "run --example quick_dev"
+cargo watch -q -c -w .\crates\services\web-server\examples\ -x "run -p web-server --example quick_dev"
 ```
 
 This command will run the `quick_dev` example, which sends requests to the server. It also watches the `examples/` directory for changes and reruns the example when changes are detected.
@@ -92,9 +99,7 @@ This command will run all the tests in the project and watch for changes. The te
 To generate a base64-url key, use the following command:
 
 ```shell
-cargo run --example gen_key
+cargo run -p gen_key
 ```
 
 This command will run the `gen_key` example, which generates a base64-url key and prints it to the console.
-
-### Safe Commit Number 3

@@ -23,10 +23,10 @@ use tracing_subscriber::EnvFilter;
 #[tokio::main]
 async fn main() -> Result<()> {
     tracing_subscriber::fmt()
-        .without_time()
-        .with_target(false)
-        .with_env_filter(EnvFilter::from_default_env())
-        .init();
+		.without_time() // For early local development.
+		.with_target(false)
+		.with_env_filter(EnvFilter::from_default_env())
+		.init();
 
     // FOR DEV ONLY
     _dev_utils::init_dev().await;

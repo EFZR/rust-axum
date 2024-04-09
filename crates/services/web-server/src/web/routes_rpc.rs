@@ -11,7 +11,9 @@ use serde_json::{json, Value};
 use tracing::debug;
 
 pub fn routes(mm: ModelManager) -> Router {
-    todo!()
+    Router::new()
+        .route("/rpc", post(rpc_handler))
+        .with_state(mm)
 }
 
 /// RPC basic information containing the rpc request

@@ -6,6 +6,9 @@ edition = "2021"
 [lib]
 doctest = false # Docs tests are disabled
 
+[lints]
+workspace = true
+
 [dependencies]
 base64 = "0.22"
-time = "0.3"
+time = {version = "0.3", features = ["formatting", "parsing", "serde"]}
