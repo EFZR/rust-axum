@@ -60,6 +60,12 @@ In this episode, we accomplished the following tasks:
 - *Destruct the project to make multi service arch*: We've restructured the project to adopt a multi-service architecture. This approach enables us to host multiple services within the same project while leveraging shared libraries across the workspace.
 - *Utilizing Wrapper Pattern in `CtxW`*: We've employed a wrapper pattern within the `CtxW` struct to manage the user context in `Ctx`. This strategy facilitates the extraction of context from the request, allowing its utilization within the server.
 
+## Completed Episode 04
+
+In this episode, we accomplished the following tasks:
+
+- *Refator `pwd` module*: Refactored the `pwd` module to enhance the migration to other hashing algorithms. This restructuring enables the seamless transition to other hashing algorithms without affecting the existing codebase.
+
 ## Deployment
 
 This section provides instructions on how to deploy and test the server.

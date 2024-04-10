@@ -1,18 +1,16 @@
-// region:     Error
-
-use super::scheme;
-use derive_more::From;
 use serde::Serialize;
+
+// region:     Error
 
 pub type Result<T> = std::result::Result<T, Error>;
 
-#[derive(Debug, Serialize, From)]
+#[derive(Debug, Serialize)]
 pub enum Error {
-    PwdWithSchemeFailedParse,
-
-    // -- Modules
-    #[from]
-    Scheme(scheme::Error),
+    Key,
+    Salt,
+    Hash,
+    PwdValidate,
+    SchemeNotFound(String)
 }
 
 // region:     Error Boilerplate
