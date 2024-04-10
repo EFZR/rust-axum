@@ -3,11 +3,10 @@
 mod error;
 mod scheme;
 
-use std::{fmt::format, hash, str::FromStr};
-
 pub use self::error::{Error, Result};
 use self::scheme::{get_scheme, SchemeStatus, DEFAULT_SCHEME};
 use lazy_regex::regex_captures;
+use std::str::FromStr;
 use uuid::Uuid;
 
 // endregion:  Modules
@@ -46,7 +45,7 @@ pub fn validate_pwd(to_hash: &ContentToHash, pwd_ref: &str) -> Result<SchemeStat
 
 // endregion:  Public Functions
 
-// region:    --- Privates
+// region:      --- Privates
 
 fn hash_for_scheme(scheme_name: &str, to_hash: &ContentToHash) -> Result<String> {
     let scheme = get_scheme(scheme_name)?;
@@ -82,7 +81,7 @@ impl FromStr for PwdParts {
     }
 }
 
-// endregion: --- Privates
+// endregion:   --- Privates
 
 // region:      --- Tests
 
