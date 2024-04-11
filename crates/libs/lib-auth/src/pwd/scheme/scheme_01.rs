@@ -10,9 +10,9 @@ use sha2::Sha512;
 
 // endregion:  --- Modules
 
-pub struct SchemeHmac;
+pub struct Scheme01;
 
-impl Scheme for SchemeHmac {
+impl Scheme for Scheme01 {
     fn hash(&self, to_hash: &ContentToHash) -> Result<String> {
         let key = &auth_config().PWD_KEY;
         hmac_sha512_hash(key, to_hash)

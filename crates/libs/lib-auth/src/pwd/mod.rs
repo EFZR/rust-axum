@@ -100,10 +100,16 @@ mod tests {
         };
 
         // -- Exec
-        let pwd_hashed = hash_pwd(&fx_to_hash)?;
+        let pwd_hashed = hash_for_scheme("01", &fx_to_hash)?;
         println!("->>   pwd_hashed: {pwd_hashed}");
         let pwd_validate = validate_pwd(&fx_to_hash, &pwd_hashed)?;
         println!("->>   validate:   {pwd_validate:?}");
+
+        // -- Check
+        assert!(
+            matches!(SchemeStatus::Outdated, pwd_validate),
+            "status should be SchemaStatus::Outdated"
+        );
 
         Ok(())
     }

@@ -1,7 +1,8 @@
 // region:     --- Modules
 
 mod error;
-mod scheme_hmac_01;
+mod scheme_01;
+mod scheme_02;
 
 pub use self::error::{Error, Result};
 
@@ -9,7 +10,7 @@ use crate::pwd::ContentToHash;
 
 // endregion:  --- Modules
 
-pub const DEFAULT_SCHEME: &str = "01";
+pub const DEFAULT_SCHEME: &str = "02";
 
 pub trait Scheme {
     fn hash(&self, to_hash: &ContentToHash) -> Result<String>;
@@ -25,7 +26,8 @@ pub enum SchemeStatus {
 
 pub fn get_scheme(scheme_name: &str) -> Result<Box<dyn Scheme>> {
     match scheme_name {
-        "01" => Ok(Box::new(scheme_hmac_01::SchemeHmac)),
+        "01" => Ok(Box::new(scheme_01::Scheme01)),
+        "02" => Ok(Box::new(scheme_02::Scheme02)),
         _ => Err(Error::SchemeNotFound(scheme_name.to_string())),
     }
 }
