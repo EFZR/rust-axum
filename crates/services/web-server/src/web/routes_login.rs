@@ -3,6 +3,7 @@ use axum::extract::State;
 use axum::routing::post;
 use axum::{body, Json, Router};
 use lib_auth::pwd::{self, ContentToHash};
+use lib_auth::pwd::SchemeStatus;
 use lib_core::ctx::Ctx;
 use lib_core::model::user::{self, UserBmc, UserForLogin};
 use lib_core::model::ModelManager;
@@ -45,7 +46,7 @@ async fn api_login_handler(
         return Err(Error::LoginFailUserHasNoPwd { user_id });
     };
 
-    pwd::validate_pwd(
+    let scheme_status = pwd::validate_pwd(
         &ContentToHash {
             salt: user.pwd_salt,
             content: pwd_clear.clone(),
@@ -53,6 +54,12 @@ async fn api_login_handler(
         &pwd,
     )
     .map_err(|_| Error::LoginFailPwdNotMatching { user_id })?;
+
+    // -- Update password scheme if needed.
+    if let SchemeStatus::Outdated = scheme_status {
+        debug!("pwd encrypt scheme outdated, upgrading.");
+        UserBmc::update_pwd(&root_ctx, &mm, user_id, &pwd_clear).await?;
+    }
 
     // -- Set web token.
     web::set_token_cookie(&cookies, &user.username, user.token_salt)?;
