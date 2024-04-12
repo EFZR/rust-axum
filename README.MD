@@ -19,6 +19,8 @@
 - 🛡️ Middleware for user authentication using a context (ctx) extractor.
 - 📊 Middleware for logging each request and response.
 - 🛣️ Routes for handling file and JSON requests.
+- 📦 Multi-service architecture for hosting multiple services within the same project.
+- 🔀 Dynamic switching between hashing algorithms for enhanced password encryption.
 
 These features form the foundation of a production server. The server, as built, is deployment-ready. 🎉
 
@@ -64,7 +66,10 @@ In this episode, we accomplished the following tasks:
 
 In this episode, we accomplished the following tasks:
 
-- *Refator `pwd` module*: Refactored the `pwd` module to enhance the migration to other hashing algorithms. This restructuring enables the seamless transition to other hashing algorithms without affecting the existing codebase.
+- *Refactor `pwd` module*: Refactored the `pwd` module to enhance the migration to other hashing algorithms. This restructuring enables the seamless transition to other hashing algorithms without affecting the existing codebase.
+- *Implement `argon2` hashing*: Implemented the `argon2` hashing algorithm within the `pwd` module.
+- *Updating legacy scheme to current scheme*: Updated the legacy hashing scheme to the current hashing algorithm to ensure the seamless transition to the new hashing algorithm.
+- *Using `static dispatch` instead of `dynamic dispatch` for selecting the hashing algorithm*: Employed a `static dispatch` mechanism instead of `dynamic dispatch` to select the hashing algorithm. This is done in the `lib-auth/pwd/scheme` module.
 
 ## Deployment
 
