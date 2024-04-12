@@ -53,6 +53,7 @@ In this episode, we accomplished the following tasks:
 In this episode, we accomplished the following task:
 
 - *Database Query Improvement*: We transitioned from using `sqlx`/`sqlb` to `sea-query`/`modql`. This change was made to enhance our capabilities in building, manipulating, and filtering database queries.
+
 - *Modql & filters*: Using the `modql` crate, we were able to make a filter using certain `modql` operators in the JSON client request. This allows us to filter the results by using the `ListOptions` and `FilterGroups` types of `modql`.
 
 ## Completed Episode 03
@@ -60,6 +61,7 @@ In this episode, we accomplished the following task:
 In this episode, we accomplished the following tasks:
 
 - *Destruct the project to make multi service arch*: We've restructured the project to adopt a multi-service architecture. This approach enables us to host multiple services within the same project while leveraging shared libraries across the workspace.
+
 - *Utilizing Wrapper Pattern in `CtxW`*: We've employed a wrapper pattern within the `CtxW` struct to manage the user context in `Ctx`. This strategy facilitates the extraction of context from the request, allowing its utilization within the server.
 
 ## Completed Episode 04
@@ -67,9 +69,14 @@ In this episode, we accomplished the following tasks:
 In this episode, we accomplished the following tasks:
 
 - *Refactor `pwd` module*: Refactored the `pwd` module to enhance the migration to other hashing algorithms. This restructuring enables the seamless transition to other hashing algorithms without affecting the existing codebase.
+
 - *Implement `argon2` hashing*: Implemented the `argon2` hashing algorithm within the `pwd` module.
+
 - *Updating legacy scheme to current scheme*: Updated the legacy hashing scheme to the current hashing algorithm to ensure the seamless transition to the new hashing algorithm.
+
 - *Using `static dispatch` instead of `dynamic dispatch` for selecting the hashing algorithm*: Employed a `static dispatch` mechanism instead of `dynamic dispatch` to select the hashing algorithm. This is done in the `lib-auth/pwd/scheme` module.
+
+- *Optimization in `hash_pwd` and `validate_pwd`*: Made the `hash_pwd` and `validate_pwd` functions async and add the `tokio::task::spawn_blocking` to handle the functions in an special thread so the other threads can continue to work without waiting for the hashing or validation to finish.
 
 ## Deployment
 

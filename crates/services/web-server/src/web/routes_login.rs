@@ -2,8 +2,8 @@ use crate::web::{self, remove_token_cookie, Error, Result};
 use axum::extract::State;
 use axum::routing::post;
 use axum::{body, Json, Router};
-use lib_auth::pwd::{self, ContentToHash};
 use lib_auth::pwd::SchemeStatus;
+use lib_auth::pwd::{self, ContentToHash};
 use lib_core::ctx::Ctx;
 use lib_core::model::user::{self, UserBmc, UserForLogin};
 use lib_core::model::ModelManager;
@@ -47,12 +47,13 @@ async fn api_login_handler(
     };
 
     let scheme_status = pwd::validate_pwd(
-        &ContentToHash {
+        ContentToHash {
             salt: user.pwd_salt,
             content: pwd_clear.clone(),
         },
         &pwd,
     )
+    .await
     .map_err(|_| Error::LoginFailPwdNotMatching { user_id })?;
 
     // -- Update password scheme if needed.

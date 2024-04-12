@@ -9,6 +9,8 @@ pub type Result<T> = std::result::Result<T, Error>;
 #[derive(Debug, Serialize, From)]
 pub enum Error {
     PwdWithSchemeFailedParse,
+    FailSpawnBlockForHash,
+    FailSpawnBlockForValidate,
 
     // -- Modules
     #[from]
