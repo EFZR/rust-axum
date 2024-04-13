@@ -1165,8 +1165,10 @@ name = "lib-rpc"
 version = "0.1.0"
 dependencies = [
  "derive_more",
+ "futures",
  "lib-core",
  "modql",
+ "paste",
  "serde",
  "serde_json",
  "serde_with",

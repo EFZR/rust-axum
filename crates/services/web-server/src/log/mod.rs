@@ -1,5 +1,5 @@
 use crate::web::routes_rpc::RpcInfo;
-use crate::web::{self, ClientError};
+use crate::web::{self};
 use crate::Result;
 use axum::http::{Method, Uri};
 use lib_core::ctx::Ctx;

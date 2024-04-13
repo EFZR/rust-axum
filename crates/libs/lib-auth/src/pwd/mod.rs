@@ -135,7 +135,7 @@ mod tests {
 
         // -- Check
         assert!(
-            matches!(SchemeStatus::Outdated, pwd_validate),
+            matches!(pwd_validate, SchemeStatus::Outdated),
             "status should be SchemaStatus::Outdated"
         );
 

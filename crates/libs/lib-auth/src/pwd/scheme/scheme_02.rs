@@ -55,7 +55,7 @@ fn get_argon2() -> &'static Argon2<'static> {
 
 #[cfg(test)]
 mod tests {
-    use crate::pwd::{scheme, ContentToHash};
+    use crate::pwd::ContentToHash;
     use super::*;
     use anyhow::Result;
     use uuid::Uuid;
