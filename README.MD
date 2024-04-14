@@ -121,3 +121,5 @@ cargo run -p gen_key
 ```
 
 This command will run the `gen_key` example, which generates a base64-url key and prints it to the console.
+
+### Safe commit
