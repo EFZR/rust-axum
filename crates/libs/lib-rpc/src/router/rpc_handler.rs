@@ -14,7 +14,7 @@ use serde_json::Value;
 /// Key points:
 /// - Rpc handler functions are asynchronous, thus returning a Future of Result<Value>.
 /// - The call format is normalized to two `impl FromResources` arguments (for now) and one optionals  `impl IntoParams`, which represent the json-rpc's optional value.
-/// - `into_box` is a convenient method for converting a RpcHandler into a Boxed dyn RpcHandlerWrapperTrait,
+/// - `into_dyn` is a convenient method for converting a RpcHandler into a Boxed dyn RpcHandlerWrapperTrait,
 ///   allowing for dynamic dispatch by the Router.
 /// - A `RpcHandler` will typically be implemented for static functions, as `FnOnce`,
 ///   enabling them to be cloned with none or negligible performance impact,
@@ -59,7 +59,7 @@ macro_rules! impl_rpc_handler_pair {
         {
             type Future = PinFutureValue;
 
-            #[allow(unused)] // somehow rpc_resources will be marked as unused
+            #[allow(unused)]
             fn call(
                 self,
                 rpc_resources: RpcResources,
@@ -81,27 +81,27 @@ macro_rules! impl_rpc_handler_pair {
         // RpcHandler implementations for zero or more FromResources and NO IntoParams
         impl<F, Fut, $($T,)* R> RpcHandler<($($T,)*), (), R> for F
         where
-                F: FnOnce($($T,)*) -> Fut + Clone + Send + 'static,
-                $( $T: FromResources + Send + Sync + 'static, )*
-                R: Serialize + Send + Sync + 'static,
-                Fut: Future<Output = Result<R>> + Send,
+            F: FnOnce($($T,)*) -> Fut + Clone + Send + 'static,
+            $( $T: FromResources + Send + Sync + 'static, )*
+            R: Serialize + Send + Sync + 'static,
+            Fut: Future<Output = Result<R>> + Send,
         {
-                type Future = PinFutureValue;
+            type Future = PinFutureValue;
 
-                #[allow(unused)] // somehow rpc_resources will be marked as unused
-                fn call(
-                        self,
-                        rpc_resources: RpcResources,
-                        _params: Option<Value>,
-                ) -> Self::Future {
-                        Box::pin(async move {
-                                let result = self(
-                                        $( $T::from_resources(&rpc_resources)?, )*
-                                )
-                                .await?;
-                                Ok(serde_json::to_value(result)?)
-                        })
-                }
+            #[allow(unused)] // somehow rpc_resources will be marked as unused
+            fn call(
+                    self,
+                    rpc_resources: RpcResources,
+                    _params: Option<Value>,
+            ) -> Self::Future {
+                    Box::pin(async move {
+                            let result = self(
+                                    $( $T::from_resources(&rpc_resources)?, )*
+                            )
+                            .await?;
+                            Ok(serde_json::to_value(result)?)
+                    })
+            }
         }
     };
 

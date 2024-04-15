@@ -17,7 +17,7 @@ use serde_with::{serde_as, OneOrMany};
 
 /// Params struct for any RPC Create Call.
 #[derive(Deserialize)]
-struct ParamsForCreate<D> {
+pub struct ParamsForCreate<D> {
     pub data: D,
 }
 
@@ -25,7 +25,7 @@ impl<D> IntoParams for ParamsForCreate<D> where D: DeserializeOwned + Send {}
 
 /// Params struct for any RPC Update Call.
 #[derive(Deserialize)]
-struct ParamsForUpdate<D> {
+pub struct ParamsForUpdate<D> {
     pub id: i64,
     pub data: D,
 }
@@ -34,7 +34,7 @@ impl<D> IntoParams for ParamsForUpdate<D> where D: DeserializeOwned + Send {}
 
 /// Params structure for any RPC Update call.
 #[derive(Deserialize)]
-struct ParamsIded {
+pub struct ParamsIded {
     pub id: i64,
 }
 
