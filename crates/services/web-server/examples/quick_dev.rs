@@ -37,7 +37,7 @@ async fn main() -> Result<()> {
         );
 
         let result = req_create_task.await?;
-        task_ids.push(result.json_value::<i64>("/result/id")?);
+        task_ids.push(result.json_value::<i64>("/result/data/id")?);
     }
 
     // Update First Task

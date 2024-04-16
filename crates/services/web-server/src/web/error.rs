@@ -30,6 +30,9 @@ pub enum Error {
     #[from]
     CtxExt(web::mw_auth::CtxExtError),
 
+    // -- ReqStamp
+    ReqStampNotInResponseExt,
+
     // -- Modules
     #[from]
     Model(model::Error),

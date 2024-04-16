@@ -18,7 +18,7 @@ tokio = { version = "1", features = ["full"] }
 # -- Json
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-serde_with = "3.6.1"
+serde_with = { workspace = true }
 # -- Data
 sqlx = { version = "0.7.4", features = [
   "runtime-tokio-rustls",
@@ -32,13 +32,14 @@ sea-query-binder = { version = "0.5", features = [
   "with-uuid",
   "with-time",
 ] }
-modql = { version = "0.3.4", features = ["with-sea-query"] }
+modql = { workspace = true }
 # -- Tracing
 tracing = "0.1"
 tracing-subscriber = { version = "0.3", features = ["env-filter"] }
 # -- Others
 uuid = { version = "1", features = ["v4", "fast-rng"] }
-derive_more = { version = "0.99", features = ["from"] }
+time = { version = "0.3", features = ["formatting", "parsing", "serde"] }
+derive_more = { workspace = true }
 
 [dev-dependencies]
 anyhow = "1"

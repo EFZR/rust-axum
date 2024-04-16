@@ -22,32 +22,39 @@
 mod base;
 mod error;
 mod store;
+mod modql_utils;
 
 pub mod task;
 pub mod user;
 
 pub use self::error::{Error, Result};
 
-use crate::model::store::{new_db_pool, Db};
+use crate::model::store::dbx::Dbx;
+use crate::model::store::new_db_pool;
 
 // endregion:  --- Modules
 
 #[derive(Clone)]
 pub struct ModelManager {
-    db: Db,
+    dbx: Dbx,
 }
 
 impl ModelManager {
     /// Constructor
     pub async fn new() -> Result<Self> {
         let db = new_db_pool().await?;
-
-        Ok(ModelManager { db })
+        let dbx = Dbx::new(db, false)?;
+        Ok(ModelManager { dbx })
     }
 
     /// Returns the sqlx db pool reference.
     /// (Only for the model layer)
-    pub(in crate::model) fn db(&self) -> &Db {
-        &self.db
+    pub fn dbx(&self) -> &Dbx {
+        &self.dbx
+    }
+
+    pub fn new_with_txn(&self) -> Result<ModelManager> {
+        let dbx = Dbx::new(self.dbx.db().clone(), true)?;
+        Ok(ModelManager { dbx })
     }
 }

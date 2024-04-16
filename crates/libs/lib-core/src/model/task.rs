@@ -1,19 +1,33 @@
 use crate::ctx::Ctx;
+use crate::generate_common_bmc_fns;
 use crate::model::base::{self, DbBmc};
+use crate::model::modql_utils::time_to_sea_value;
 use crate::model::ModelManager;
 use crate::model::Result;
+use lib_utils::time::Rfc3339;
 use modql::field::Fields;
-use modql::filter::{FilterNodes, ListOptions, OpValsBool, OpValsInt64, OpValsString};
+use modql::filter::{FilterNodes, ListOptions, OpValsBool, OpValsInt64, OpValsString, OpValsValue};
 use serde::{Deserialize, Serialize};
+use serde_with::serde_as;
+use sqlx::types::time::OffsetDateTime;
 use sqlx::FromRow;
 
 // region:     Task Types
-
+#[serde_as]
 #[derive(Debug, Clone, Fields, FromRow, Serialize)]
 pub struct Task {
     pub id: i64,
     pub title: String,
     pub done: bool,
+
+    // --   Timestamps
+    //      (Creator and last modifier)
+    pub cid: i64,
+    #[serde_as(as = "Rfc3339")]
+    pub ctime: OffsetDateTime,
+    pub mid: i64,
+    #[serde_as(as = "Rfc3339")]
+    pub mtime: OffsetDateTime,
 }
 
 #[derive(Fields, Deserialize)]
@@ -32,6 +46,13 @@ pub struct TaskFilter {
     id: Option<OpValsInt64>,
     title: Option<OpValsString>,
     done: Option<OpValsBool>,
+
+    pub cid: Option<OpValsInt64>,
+    #[modql(to_sea_value_fn = "time_to_sea_value")]
+    pub ctime: Option<OpValsValue>,
+    pub mid: Option<OpValsInt64>,
+    #[modql(to_sea_value_fn = "time_to_sea_value")]
+    pub mtime: Option<OpValsValue>,
 }
 
 // endregion:  Task Types
@@ -44,37 +65,13 @@ impl DbBmc for TaskBmc {
     const TABLE: &'static str = "task";
 }
 
-impl TaskBmc {
-    pub async fn create(ctx: &Ctx, mm: &ModelManager, task_c: TaskForCreate) -> Result<i64> {
-        base::create::<Self, _>(ctx, mm, task_c).await
-    }
-
-    pub async fn get(ctx: &Ctx, mm: &ModelManager, id: i64) -> Result<Task> {
-        base::get::<Self, _>(ctx, mm, id).await
-    }
-
-    pub async fn list(
-        ctx: &Ctx,
-        mm: &ModelManager,
-        filters: Option<Vec<TaskFilter>>,
-        list_options: Option<ListOptions>,
-    ) -> Result<Vec<Task>> {
-        base::list::<Self, _, _>(ctx, mm, filters, list_options).await
-    }
-
-    pub async fn update(
-        ctx: &Ctx,
-        mm: &ModelManager,
-        id: i64,
-        task_u: TaskForUpdate,
-    ) -> Result<()> {
-        base::update::<Self, _>(ctx, mm, id, task_u).await
-    }
-
-    pub async fn delete(ctx: &Ctx, mm: &ModelManager, id: i64) -> Result<()> {
-        base::delete::<Self>(ctx, mm, id).await
-    }
-}
+generate_common_bmc_fns!(
+    Bmc: TaskBmc,
+    Entity: Task,
+    ForCreate: TaskForCreate,
+    ForUpdate: TaskForUpdate,
+    Filter: TaskFilter,
+);
 
 // endregion:  TaskBmc
 

@@ -6,6 +6,7 @@ pub mod mw_res_map;
 pub mod routes_login;
 pub mod routes_rpc;
 pub mod routes_static;
+pub mod mw_stamp;
 
 pub use self::error::ClientError;
 pub use self::error::{Error, Result};

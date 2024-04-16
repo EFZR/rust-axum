@@ -10,5 +10,9 @@ pub mod router;
 
 pub use self::error::{Error, Result};
 pub use self::resources::RpcResources;
+pub use router::RpcRequest;
+pub use rpc_params::*;
+
+pub use rpcs::*;
 
 // endregion:   --- Modules
