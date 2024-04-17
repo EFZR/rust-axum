@@ -21,9 +21,10 @@
 
 mod base;
 mod error;
-mod store;
 mod modql_utils;
+mod store;
 
+pub mod project;
 pub mod task;
 pub mod user;
 

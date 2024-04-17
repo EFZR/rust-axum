@@ -78,6 +78,18 @@ In this episode, we accomplished the following tasks:
 
 - *Optimization in `hash_pwd` and `validate_pwd`*: Made the `hash_pwd` and `validate_pwd` functions async and add the `tokio::task::spawn_blocking` to handle the functions in an special thread so the other threads can continue to work without waiting for the hashing or validation to finish.
 
+## Episode 05 Summary
+
+In Episode 05, we achieved the following:
+
+- *Developed a standalone `lib_rpc` router*: We constructed a standalone `lib_rpc` router to manage JSON RPC requests. This router is tasked with processing both the incoming JSON RPC requests and the corresponding responses.
+
+## Episode 06 Summary
+
+In Episode 06, we accomplished the following:
+
+- *Enhanced database connectivity*: We refined our database connection by allowing the `store` module to handle all database transactions. Additionally, we implemented robust error handling for these transactions.
+
 ## Deployment
 
 This section provides instructions on how to deploy and test the server.
