@@ -43,7 +43,9 @@ pub struct ModelManager {
 impl ModelManager {
     /// Constructor
     pub async fn new() -> Result<Self> {
-        let db = new_db_pool().await?;
+        let db = new_db_pool()
+            .await
+            .map_err(|ex| Error::CantCreateModelManagerProvider(ex.to_string()))?;
         let dbx = Dbx::new(db, false)?;
         Ok(ModelManager { dbx })
     }

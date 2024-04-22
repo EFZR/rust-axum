@@ -8,7 +8,7 @@ use serde_json::Value;
 /// For customized behavior, users can implement their own `into_handler_params`
 /// method.
 pub trait IntoParams: DeserializeOwned + Send {
-    fn into_params(value: Option<Value>) -> (Result<Self>) {
+    fn into_params(value: Option<Value>) -> Result<Self> {
         match value {
             Some(value) => Ok(serde_json::from_value(value)?),
             None => Err(Error::RpcIntoParamsMissing),

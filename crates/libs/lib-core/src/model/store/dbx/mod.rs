@@ -3,12 +3,11 @@
 mod error;
 
 pub use error::{Error, Result};
-use sea_query::query;
 
 use crate::model::store::Db;
 use sqlx::postgres::any::AnyConnectionBackend;
 use sqlx::query::{Query, QueryAs};
-use sqlx::{FromRow, IntoArguments, Pool, Postgres, Transaction};
+use sqlx::{FromRow, IntoArguments, Postgres, Transaction};
 use std::ops::{Deref, DerefMut};
 use std::sync::Arc;
 use tokio::sync::Mutex;

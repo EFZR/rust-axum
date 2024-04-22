@@ -10,6 +10,7 @@ use config::web_config;
 
 use crate::web::mw_auth::{mw_ctx_require, mw_ctx_resolve};
 use crate::web::mw_res_map::mw_response_map;
+use crate::web::mw_stamp;
 use crate::web::{routes_login, routes_rpc, routes_static};
 use axum::{middleware, Router};
 use lib_core::_dev_utils;
@@ -23,10 +24,10 @@ use tracing_subscriber::EnvFilter;
 #[tokio::main]
 async fn main() -> Result<()> {
     tracing_subscriber::fmt()
-		.without_time() // For early local development.
-		.with_target(false)
-		.with_env_filter(EnvFilter::from_default_env())
-		.init();
+        .without_time() // For early local development.
+        .with_target(false)
+        .with_env_filter(EnvFilter::from_default_env())
+        .init();
 
     // FOR DEV ONLY
     _dev_utils::init_dev().await;
@@ -44,6 +45,7 @@ async fn main() -> Result<()> {
         .layer(middleware::map_response(mw_response_map))
         .layer(middleware::from_fn_with_state(mm.clone(), mw_ctx_resolve))
         .layer(CookieManagerLayer::new())
+        .layer(middleware::from_fn(mw_stamp::mw_req_stamp))
         .fallback_service(routes_static::serve_dir());
 
     // region:     --- Start server

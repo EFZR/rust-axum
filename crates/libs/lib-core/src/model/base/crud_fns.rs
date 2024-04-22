@@ -7,7 +7,7 @@ use crate::model::ModelManager;
 use crate::model::{Error, Result};
 use modql::field::HasFields;
 use modql::filter::{FilterGroups, ListOptions};
-use sea_query::{query, Condition, Expr, PostgresQueryBuilder, Query};
+use sea_query::{Condition, Expr, PostgresQueryBuilder, Query};
 use sea_query_binder::SqlxBinder;
 use sqlx::postgres::PgRow;
 use sqlx::FromRow;
@@ -71,7 +71,7 @@ where
 }
 
 pub async fn list<MC, E, F>(
-    ctx: &Ctx,
+    _ctx: &Ctx,
     mm: &ModelManager,
     filter: Option<F>,
     list_options: Option<ListOptions>,

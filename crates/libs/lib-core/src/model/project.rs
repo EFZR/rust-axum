@@ -8,7 +8,7 @@ use crate::model::ModelManager;
 use crate::model::Result;
 use lib_utils::time::Rfc3339;
 use modql::field::Fields;
-use modql::filter::{FilterNodes, ListOptions, OpValsBool, OpValsInt64, OpValsString, OpValsValue};
+use modql::filter::{FilterNodes, ListOptions, OpValsInt64, OpValsString, OpValsValue};
 use serde::{Deserialize, Serialize};
 use serde_with::serde_as;
 use sqlx::types::time::OffsetDateTime;
