@@ -21,6 +21,7 @@
 - 🛣️ Routes for handling file and JSON requests.
 - 📦 Multi-service architecture for hosting multiple services within the same project.
 - 🔀 Dynamic switching between hashing algorithms for enhanced password encryption.
+- ❌ Error management.
 
 These features form the foundation of a production server. The server, as built, is deployment-ready. 🎉
 
